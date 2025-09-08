@@ -141,7 +141,7 @@ def click():
     print(f'移动鼠标并点击{x}|{y}')
 
     # 随机移动几次鼠标
-    random_scroll_cursor()
+    # random_scroll_cursor()
 
     # 1. 随机移动鼠标到
 
