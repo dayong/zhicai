@@ -44,7 +44,7 @@ pyinstaller-hooks-contrib==2025.8
 pymongo==4.13.2
 PyMsgBox==1.0.9
 pyobjc-core==11.1; sys_platform == "darwin"
-pyobjc-framework-Cocoa==11.1
+pyobjc-framework-Cocoa==11.1; sys_platform == "darwin"
 pyobjc-framework-Quartz==11.1
 PyPDF2==3.0.1
 pyperclip==1.9.0
