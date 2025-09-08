@@ -43,7 +43,7 @@ pyinstaller==6.15.0
 pyinstaller-hooks-contrib==2025.8
 pymongo==4.13.2
 PyMsgBox==1.0.9
-pyobjc-core==11.1
+pyobjc-core==11.1; sys_platform == "darwin"
 pyobjc-framework-Cocoa==11.1
 pyobjc-framework-Quartz==11.1
 PyPDF2==3.0.1
