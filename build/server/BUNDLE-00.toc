@@ -1,0 +1,3 @@
+([('server',
+   '/Users/sun/Documents/__mywork__/chrome-plugin-server/dist/server',
+   'EXECUTABLE')],)
