@@ -1,35 +1,45 @@
-name: Build Windows EXE
+name: Build EXE
 
 on:
   push:
     branches:
-      - main   # 触发条件：推送到 main 分支
-  workflow_dispatch:   # 支持手动触发
+      - main
+  pull_request:
 
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.8.10'
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.8
 
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
+    - name: Upgrade pip, setuptools, wheel
+      run: |
+        python -m pip install --upgrade pip setuptools wheel
 
-      - name: Build exe with PyInstaller
-        run: |
-          pyinstaller --onefile server.py
+    - name: Install dependencies
+      run: |
+        # 使用官方 PyPI 安装依赖
+        pip install -r requirements.txt --index-url https://pypi.org/simple
+      # 如果 typing-inspection 安装失败，可以临时忽略：
+      continue-on-error: true
 
-      - name: Upload EXE
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-exe
-          path: dist/server.exe
+    - name: Install PyInstaller
+      run: pip install pyinstaller
 
+    - name: Build EXE
+      run: |
+        pyinstaller --onefile server.py
+        # your_main_script.py 替换成你的入口文件名
+
+    - name: Upload EXE artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: my-exe
+        path: dist/server.exe
