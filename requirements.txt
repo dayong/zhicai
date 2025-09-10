@@ -2,7 +2,7 @@ altgraph==0.17.4
 annotated-types==0.7.0
 APScheduler==3.11.0
 bcrypt==4.3.0
-blinker==1.9.0
+blinker>=1.6,<2
 certifi==2025.7.14
 charset-normalizer==3.4.2
 click==8.2.1
