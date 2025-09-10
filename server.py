@@ -33,9 +33,9 @@ def human_like_move_from_to(target_x, target_y, duration=1.0):
     # 随机控制点，保证曲线不是直线
     start_x, start_y = pyautogui.position()
 
-    print('target_x, target_y', target_x, target_y)
+    # print('target_x, target_y', target_x, target_y)
 
-    print('start_x, start_y',start_x, start_y)
+    # print('start_x, start_y',start_x, start_y)
 
 
     cp1 = (start_x + (target_x - start_x) * random.uniform(0.3, 0.5) + random.randint(-100, 100),
@@ -43,26 +43,34 @@ def human_like_move_from_to(target_x, target_y, duration=1.0):
     cp2 = (start_x + (target_x - start_x) * random.uniform(0.5, 0.8) + random.randint(-100, 100),
            start_y + (target_y - start_y) * random.uniform(0.5, 0.8) + random.randint(-100, 100))
 
-    steps = random.randint(50, 60)
+    steps = random.randint(40, 80)
     path = bezier_curve((start_x, start_y), cp1, cp2, (target_x, target_y), steps)
 
+    # print('path', path, len(path))
+
     start_time = time.time()
+
     for i in range(steps + 1):
+    # for i in range(len(path)):
         t = i / steps
         eased_t = ease_in_out_quad(t)  # 应用加速减速
         index = int(eased_t * steps)
         x, y = path[index]
+        
 
         try:
-            pyautogui.moveTo(x, y)
+            pyautogui.moveTo(x, y, duration=random.uniform(0.005, 0.015), _pause=False)
         except pyautogui.FailSafeException:
             print('出界')
         
 
         # 保持总时长接近 duration
+        
         elapsed = time.time() - start_time
         expected = eased_t * duration
         sleep_time = expected - elapsed
+
+        # print('保持总时长接近 duration', elapsed, expected, sleep_time)
         if sleep_time > 0:
             time.sleep(sleep_time)
 
@@ -83,7 +91,7 @@ def human_click(x, y, move_duration=(0.1, 0.2), press_duration=(0.07, 0.35), off
 
     # 平滑移动到目标位置
     duration = random.uniform(*move_duration)
-    pyautogui.moveTo(x, y, duration=duration)
+    pyautogui.moveTo(x, y, duration=duration, _pause=False)
 
     # 按下鼠标
     pyautogui.mouseDown()
@@ -144,30 +152,27 @@ def click():
     # random_scroll_cursor()
 
     # 1. 随机移动鼠标到
-
     human_like_move_from_to(x, y, duration=0.1)
+
+    # pyautogui.moveTo(x, y, duration=random.uniform(2, 4), _pause=False)
 
 
     # 2. 模拟点击
     human_click(x, y)
 
     press_time = random.uniform(0.3, 1)
+
     time.sleep(press_time)
 
-
     screenWidth, screenHeight = pyautogui.size()
-
-    print(screenWidth, screenHeight)
 
     to_x = random.randint(int(screenWidth/2), screenWidth - 1)
     to_y = random.randint(100, screenHeight - 100)
 
     # 点击后 移走
-    # random_move_to(to_x, to_y, 0.2)
-    # pyautogui.moveTo(screenWidth/2, screenHeight/2, duration=0.5)
+    human_like_move_from_to(to_x, to_y, duration=random.uniform(0.1, 0.3))
 
-
-    human_like_move_from_to(to_x, to_y, duration=random.uniform(0.1, 0.6))
+    # pyautogui.moveTo(to_x, to_y, duration=random.uniform(0.1, 0.2))
     
    
     return {"status": "ok"}
