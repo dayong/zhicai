@@ -166,8 +166,10 @@ def click():
 
     screenWidth, screenHeight = pyautogui.size()
 
-    to_x = random.randint(int(screenWidth/2), screenWidth - 1)
-    to_y = random.randint(100, screenHeight - 100)
+    to_x = random.randint(int(screenWidth/2), screenWidth - 100)
+    to_y = random.randint(200, screenHeight - 200)
+
+    print("点击后下一鼠标位置：", to_x, to_y)
 
     # 点击后 移走
     human_like_move_from_to(to_x, to_y, duration=random.uniform(0.1, 0.3))
