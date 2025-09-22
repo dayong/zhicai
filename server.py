@@ -133,7 +133,11 @@ def random_scroll_cursor():
 
 
 
-        
+@app.route("/getCursorPosition", methods=["POST"])
+def getCursorPosition(): 
+    print('getCursorPosition')
+    start_x, start_y = pyautogui.position()
+    return {"x":start_x, "y":start_y}
 
 
 
