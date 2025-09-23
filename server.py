@@ -144,10 +144,10 @@ def getCursorPosition():
 @app.route("/click", methods=["POST"])
 def click():
     data = request.json
-    x, y = data.get("x"), data.get("y")
+    x, y, top = data.get("x"), data.get("y"), data.get("top")
     print(f'{x}|{y}')
     if x is None or y is None:
-        return {"status": "error", "message": "缺少坐标"}, 400
+        return {"status": "error", "message": "缺少坐标"}
 
     # 移动鼠标并点击
     print(f'移动鼠标并点击{x}|{y}')
@@ -171,7 +171,7 @@ def click():
     screenWidth, screenHeight = pyautogui.size()
 
     to_x = random.randint(int(screenWidth/2), screenWidth - 100)
-    to_y = random.randint(200, screenHeight - 200)
+    to_y = random.randint(top + 100, screenHeight - 200)
 
     print("点击后下一鼠标位置：", to_x, to_y)
 
